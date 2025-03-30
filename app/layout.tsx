@@ -4,6 +4,7 @@ import { Inter } from 'next/font/google'
 import './globals.css'
 import Script from 'next/script'
 import Navigation from './components/Navigation'
+import { NextAuthProvider } from './providers'
 
 const inter = Inter({ 
   subsets: ['latin', 'cyrillic'],
@@ -33,23 +34,25 @@ export default function RootLayout({
         />
       </head>
       <body className={inter.className}>
-        <div className="min-vh-100 d-flex flex-column">
-          <Navigation />
-          <div className="flex-grow-1">
-            {children}
-          </div>
-          <footer className="py-4 bg-body-tertiary">
-            <div className="container">
-              <div className="row">
-                <div className="col-12 text-center">
-                  <p className="text-body-secondary mb-0">
-                    © 2024 Система проведения конкурсов. Все права защищены.
-                  </p>
+        <NextAuthProvider>
+          <div className="min-vh-100 d-flex flex-column">
+            <Navigation />
+            <div className="flex-grow-1">
+              {children}
+            </div>
+            <footer className="py-4 bg-body-tertiary">
+              <div className="container">
+                <div className="row">
+                  <div className="col-12 text-center">
+                    <p className="text-body-secondary mb-0">
+                      © 2024 Система проведения конкурсов. Все права защищены.
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
-          </footer>
-        </div>
+            </footer>
+          </div>
+        </NextAuthProvider>
         <Script 
           src="https://code.jquery.com/jquery-3.7.1.min.js"
           strategy="beforeInteractive"

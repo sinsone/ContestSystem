@@ -1,58 +1,92 @@
 import { NextResponse } from 'next/server';
+import { compare } from 'bcryptjs';
 import { PrismaClient } from '@prisma/client';
-import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
+import { sign } from 'jsonwebtoken';
 
 const prisma = new PrismaClient();
-const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
 
-export async function POST(request: Request) {
+export async function POST(req: Request) {
   try {
-    const { email, password } = await request.json();
+    const { email, password } = await req.json();
 
+    // Проверка обязательных полей
+    if (!email || !password) {
+      return NextResponse.json(
+        { error: 'Email и пароль обязательны' },
+        { status: 400 }
+      );
+    }
+
+    // Поиск пользователя
     const user = await prisma.user.findUnique({
       where: { email },
     });
 
     if (!user) {
       return NextResponse.json(
-        { message: 'Неверный email или пароль' },
+        { error: 'Неверный email или пароль' },
         { status: 401 }
       );
     }
 
-    const isValidPassword = await bcrypt.compare(password, user.password);
+    // Проверка пароля
+    const isPasswordValid = await compare(password, user.password);
 
-    if (!isValidPassword) {
+    if (!isPasswordValid) {
       return NextResponse.json(
-        { message: 'Неверный email или пароль' },
+        { error: 'Неверный email или пароль' },
         { status: 401 }
       );
     }
 
-    const token = jwt.sign(
-      { userId: user.id, email: user.email, role: user.role },
-      JWT_SECRET,
-      { expiresIn: '1d' }
+    // Создание JWT токена
+    const token = sign(
+      { 
+        userId: user.id,
+        email: user.email,
+        name: user.name
+      },
+      process.env.JWT_SECRET || 'your-secret-key',
+      { expiresIn: '7d' }
     );
 
+    // Создание сессии
+    const session = await prisma.session.create({
+      data: {
+        sessionToken: token,
+        userId: user.id,
+        expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 дней
+      },
+    });
+
+    // Создаем ответ
     const response = NextResponse.json(
-      { message: 'Успешный вход', user: { id: user.id, email: user.email, role: user.role } },
+      { 
+        message: 'Вход выполнен успешно',
+        user: {
+          id: user.id,
+          email: user.email,
+          name: user.name
+        }
+      },
       { status: 200 }
     );
 
-    response.cookies.set('token', token, {
+    // Устанавливаем cookie
+    response.cookies.set({
+      name: 'token',
+      value: token,
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
-      maxAge: 86400 // 24 hours
+      sameSite: 'lax',
+      maxAge: 7 * 24 * 60 * 60, // 7 дней
     });
 
     return response;
   } catch (error) {
-    console.error('Login error:', error);
+    console.error('Ошибка при входе:', error);
     return NextResponse.json(
-      { message: 'Внутренняя ошибка сервера' },
+      { error: 'Произошла ошибка при входе' },
       { status: 500 }
     );
   }

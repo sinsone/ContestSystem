@@ -1,6 +1,46 @@
-# Система проведения дистанционного конкурса
+# Contest System
 
-Веб-приложение для организации и проведения дистанционных конкурсов.
+Система для проведения конкурсов
+
+## Развертывание на Vercel
+
+1. Создайте аккаунт на [Vercel](https://vercel.com)
+2. Установите Vercel CLI:
+   ```bash
+   npm i -g vercel
+   ```
+3. Войдите в аккаунт Vercel:
+   ```bash
+   vercel login
+   ```
+4. Создайте секреты для переменных окружения:
+   ```bash
+   vercel secrets add nextauth_secret "your-super-secret-key"
+   vercel secrets add database_url "your-production-database-url"
+   ```
+5. Разверните приложение:
+   ```bash
+   vercel
+   ```
+
+## Локальная разработка
+
+1. Установите зависимости:
+   ```bash
+   npm install
+   ```
+2. Создайте файл `.env.local` и настройте переменные окружения
+3. Запустите сервер разработки:
+   ```bash
+   npm run dev
+   ```
+
+## База данных
+
+Для работы приложения требуется PostgreSQL база данных. В продакшене рекомендуется использовать:
+- [Neon](https://neon.tech) (есть бесплатный тариф)
+- [Supabase](https://supabase.com) (есть бесплатный тариф)
+- [Railway](https://railway.app) (есть бесплатный тариф)
 
 ## Функциональность
 
