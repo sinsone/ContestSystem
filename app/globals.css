@@ -1,0 +1,254 @@
+@import 'bootstrap-icons/font/bootstrap-icons.css';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 51, 51, 51;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+  --transition-speed: 0.3s;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: rgb(var(--background-start-rgb));
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: inherit;
+}
+
+.text-shadow {
+  text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.text-gradient {
+  background: linear-gradient(to right, #60a5fa, #3b82f6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+[data-bs-theme="dark"] {
+  --bs-body-bg: #0a0a0a;
+  --bs-body-color: #ffffff;
+  --bs-primary: #3b82f6;
+  --bs-primary-rgb: 59, 130, 246;
+  --bs-link-color: #60a5fa;
+  --bs-link-hover-color: #93c5fd;
+  --bs-navbar-color: #ffffff;
+  --bs-navbar-hover-color: #93c5fd;
+  --bs-navbar-active-color: #60a5fa;
+  --bs-card-bg: #1a1a1a;
+  --bs-border-color: #2a2a2a;
+  --bs-form-control-bg: #1a1a1a;
+  --bs-form-control-disabled-bg: #262626;
+  --bs-input-bg: #1a1a1a;
+  --bs-input-color: #ffffff;
+  --bs-input-border-color: #2a2a2a;
+  --bs-input-focus-bg: #262626;
+  --bs-input-focus-border-color: #3b82f6;
+  --bs-input-focus-color: #ffffff;
+  --bs-input-placeholder-color: #6b7280;
+}
+
+[data-bs-theme="light"] {
+  --bs-primary: #3b82f6;
+  --bs-primary-rgb: 59, 130, 246;
+  --bs-body-bg: #ffffff;
+  --bs-body-color: #1a1a1a;
+  --bs-link-color: #2563eb;
+  --bs-link-hover-color: #1d4ed8;
+  --bs-card-bg: #ffffff;
+  --bs-border-color: #e5e7eb;
+  --bs-form-control-bg: #ffffff;
+  --bs-form-control-disabled-bg: #f3f4f6;
+  --bs-input-bg: #ffffff;
+  --bs-input-color: #1a1a1a;
+  --bs-input-border-color: #d1d5db;
+  --bs-input-focus-bg: #ffffff;
+  --bs-input-focus-border-color: #3b82f6;
+  --bs-input-focus-color: #1a1a1a;
+  --bs-input-placeholder-color: #6b7280;
+}
+
+/* Стили для форм */
+.form-control {
+  background-color: var(--bs-form-control-bg);
+  border-color: var(--bs-input-border-color);
+  color: var(--bs-input-color);
+  transition: all var(--transition-speed) ease;
+}
+
+.form-control:focus {
+  background-color: var(--bs-input-focus-bg);
+  border-color: var(--bs-input-focus-border-color);
+  color: var(--bs-input-focus-color);
+  box-shadow: 0 0 0 0.25rem rgba(var(--bs-primary-rgb), 0.25);
+}
+
+.form-control::placeholder {
+  color: var(--bs-input-placeholder-color);
+}
+
+.form-control:disabled {
+  background-color: var(--bs-form-control-disabled-bg);
+}
+
+.form-label {
+  color: var(--bs-body-color);
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+/* Стили для карточек форм */
+.auth-card {
+  background-color: var(--bs-card-bg);
+  border: 1px solid var(--bs-border-color);
+  border-radius: 1rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  padding: 2rem;
+}
+
+/* Плавные переходы для всего сайта */
+* {
+  transition: background-color var(--transition-speed) ease,
+              border-color var(--transition-speed) ease,
+              color var(--transition-speed) ease,
+              transform var(--transition-speed) ease,
+              box-shadow var(--transition-speed) ease;
+}
+
+/* Стили для кнопок */
+.btn {
+  position: relative;
+  overflow: hidden;
+  transform: translateY(0);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--bs-primary) 0%, #60a5fa 100%);
+  border: none;
+}
+
+.btn-outline-primary {
+  border: 2px solid var(--bs-primary);
+}
+
+.btn-outline-primary:hover {
+  background: linear-gradient(135deg, var(--bs-primary) 0%, #60a5fa 100%);
+  border-color: transparent;
+}
+
+/* Эффект пульсации для активной кнопки темы */
+.btn-primary:not(.btn-outline-primary) {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(var(--bs-primary-rgb), 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(var(--bs-primary-rgb), 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(var(--bs-primary-rgb), 0);
+  }
+}
+
+/* Стили для навигации */
+.navbar {
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--bs-border-color) !important;
+  background-color: rgba(var(--background-start-rgb), 0.8) !important;
+}
+
+.nav-link {
+  position: relative;
+  margin: 0 5px;
+  font-weight: 500;
+  color: var(--bs-navbar-color) !important;
+}
+
+.nav-link:hover {
+  color: var(--bs-navbar-hover-color) !important;
+  background-color: rgba(var(--bs-primary-rgb), 0.1);
+}
+
+/* Анимация для мобильного меню */
+.navbar-toggler {
+  border-color: var(--bs-border-color) !important;
+}
+
+.navbar-toggler:hover {
+  transform: rotate(90deg);
+}
+
+/* Плавное появление контента */
+.container {
+  animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Стили для карточек */
+.card {
+  background-color: var(--bs-card-bg);
+  border: 1px solid var(--bs-border-color);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+/* Стили для скроллбара */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bs-body-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--bs-primary);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--bs-link-hover-color);
+} 
