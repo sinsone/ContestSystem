@@ -24,23 +24,26 @@ export default function RootLayout({
   return (
     <html lang="ru" data-bs-theme="light">
       <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link 
           href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" 
           rel="stylesheet"
+          precedence="default"
         />
         <link 
           href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" 
           rel="stylesheet"
+          precedence="default"
         />
       </head>
-      <body className={inter.className}>
+      <body className={`${inter.className} bg-body`}>
         <NextAuthProvider>
           <div className="min-vh-100 d-flex flex-column">
             <Navigation />
-            <div className="flex-grow-1">
+            <main className="flex-grow-1">
               {children}
-            </div>
-            <footer className="py-4 bg-body-tertiary">
+            </main>
+            <footer className="py-4 bg-body-tertiary mt-auto">
               <div className="container">
                 <div className="row">
                   <div className="col-12 text-center">
@@ -61,11 +64,12 @@ export default function RootLayout({
           src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
           strategy="afterInteractive"
         />
-        <Script id="theme-init">
+        <Script id="theme-init" strategy="afterInteractive">
           {`
             if (typeof window !== 'undefined') {
               const savedTheme = localStorage.getItem('theme') || 'light';
               document.documentElement.setAttribute('data-bs-theme', savedTheme);
+              document.body.classList.toggle('dark-mode', savedTheme === 'dark');
             }
           `}
         </Script>

@@ -36,9 +36,16 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# database
+*.db
+*.db-journal
+
 # IDE
 .idea
 .vscode
+
+# cloudflare
+cloudflared.exe
 
 # Prisma
 /prisma/.env

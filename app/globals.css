@@ -10,20 +10,109 @@
   --transition-speed: 0.3s;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+/* Отключаем конфликтующие стили Tailwind */
+@layer base {
+  html {
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  body {
+    color: rgb(var(--foreground-rgb));
+    background: rgb(var(--background-start-rgb));
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
   }
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: rgb(var(--background-start-rgb));
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+/* Стили Bootstrap с повышенным приоритетом */
+.btn.btn-primary {
+  background: linear-gradient(135deg, var(--bs-primary) 0%, #60a5fa 100%) !important;
+  border: none !important;
+}
+
+.navbar {
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  background-color: rgba(var(--background-start-rgb), 0.95) !important;
+  border-bottom: 1px solid var(--bs-border-color);
+  z-index: 1030;
+}
+
+.card {
+  background-color: var(--bs-card-bg) !important;
+  border: 1px solid var(--bs-border-color) !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+}
+
+/* Темная тема */
+[data-bs-theme="dark"] {
+  --bs-body-bg: #0a0a0a;
+  --bs-body-color: #ffffff;
+  --bs-primary: #3b82f6;
+  --bs-primary-rgb: 59, 130, 246;
+  --bs-link-color: #60a5fa;
+  --bs-link-hover-color: #93c5fd;
+  --bs-navbar-color: #ffffff;
+  --bs-navbar-hover-color: #93c5fd;
+  --bs-navbar-active-color: #60a5fa;
+  --bs-card-bg: #1a1a1a;
+  --bs-border-color: #2a2a2a;
+}
+
+/* Светлая тема */
+[data-bs-theme="light"] {
+  --bs-body-bg: #ffffff;
+  --bs-body-color: #1a1a1a;
+  --bs-primary: #3b82f6;
+  --bs-primary-rgb: 59, 130, 246;
+  --bs-link-color: #2563eb;
+  --bs-link-hover-color: #1d4ed8;
+  --bs-card-bg: #ffffff;
+  --bs-border-color: #e5e7eb;
+}
+
+/* Анимации */
+.fade-enter {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.fade-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 300ms, transform 300ms;
+}
+
+.fade-exit {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.fade-exit-active {
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 300ms, transform 300ms;
+}
+
+/* Улучшенный скроллбар */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--bs-primary);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--bs-link-hover-color);
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -41,49 +130,6 @@ h1, h2, h3, h4, h5, h6 {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-}
-
-[data-bs-theme="dark"] {
-  --bs-body-bg: #0a0a0a;
-  --bs-body-color: #ffffff;
-  --bs-primary: #3b82f6;
-  --bs-primary-rgb: 59, 130, 246;
-  --bs-link-color: #60a5fa;
-  --bs-link-hover-color: #93c5fd;
-  --bs-navbar-color: #ffffff;
-  --bs-navbar-hover-color: #93c5fd;
-  --bs-navbar-active-color: #60a5fa;
-  --bs-card-bg: #1a1a1a;
-  --bs-border-color: #2a2a2a;
-  --bs-form-control-bg: #1a1a1a;
-  --bs-form-control-disabled-bg: #262626;
-  --bs-input-bg: #1a1a1a;
-  --bs-input-color: #ffffff;
-  --bs-input-border-color: #2a2a2a;
-  --bs-input-focus-bg: #262626;
-  --bs-input-focus-border-color: #3b82f6;
-  --bs-input-focus-color: #ffffff;
-  --bs-input-placeholder-color: #6b7280;
-}
-
-[data-bs-theme="light"] {
-  --bs-primary: #3b82f6;
-  --bs-primary-rgb: 59, 130, 246;
-  --bs-body-bg: #ffffff;
-  --bs-body-color: #1a1a1a;
-  --bs-link-color: #2563eb;
-  --bs-link-hover-color: #1d4ed8;
-  --bs-card-bg: #ffffff;
-  --bs-border-color: #e5e7eb;
-  --bs-form-control-bg: #ffffff;
-  --bs-form-control-disabled-bg: #f3f4f6;
-  --bs-input-bg: #ffffff;
-  --bs-input-color: #1a1a1a;
-  --bs-input-border-color: #d1d5db;
-  --bs-input-focus-bg: #ffffff;
-  --bs-input-focus-border-color: #3b82f6;
-  --bs-input-focus-color: #1a1a1a;
-  --bs-input-placeholder-color: #6b7280;
 }
 
 /* Стили для форм */
@@ -117,11 +163,49 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Стили для карточек форм */
 .auth-card {
-  background-color: var(--bs-card-bg);
-  border: 1px solid var(--bs-border-color);
+  background: var(--bs-body-bg);
   border-radius: 1rem;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   padding: 2rem;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease;
+}
+
+.auth-card:hover {
+  transform: translateY(-5px);
+}
+
+.auth-card .form-control {
+  border-radius: 0.5rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--bs-border-color);
+  background-color: var(--bs-body-bg);
+  color: var(--bs-body-color);
+}
+
+.auth-card .form-control:focus {
+  border-color: var(--bs-primary);
+  box-shadow: 0 0 0 0.25rem rgba(var(--bs-primary-rgb), 0.25);
+}
+
+.auth-card .btn {
+  border-radius: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.auth-card .btn-primary {
+  background: linear-gradient(135deg, var(--bs-primary) 0%, #60a5fa 100%);
+  border: none;
+}
+
+.auth-card .btn-outline-primary {
+  border: 2px solid var(--bs-primary);
+}
+
+.auth-card .btn-outline-primary:hover {
+  background: linear-gradient(135deg, var(--bs-primary) 0%, #60a5fa 100%);
+  border-color: transparent;
 }
 
 /* Плавные переходы для всего сайта */
@@ -152,11 +236,6 @@ h1, h2, h3, h4, h5, h6 {
   transform: translateY(0);
 }
 
-.btn-primary {
-  background: linear-gradient(135deg, var(--bs-primary) 0%, #60a5fa 100%);
-  border: none;
-}
-
 .btn-outline-primary {
   border: 2px solid var(--bs-primary);
 }
@@ -184,13 +263,6 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* Стили для навигации */
-.navbar {
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--bs-border-color) !important;
-  background-color: rgba(var(--background-start-rgb), 0.8) !important;
-}
-
 .nav-link {
   position: relative;
   margin: 0 5px;
@@ -226,13 +298,6 @@ h1, h2, h3, h4, h5, h6 {
     opacity: 1;
     transform: translateY(0);
   }
-}
-
-/* Стили для карточек */
-.card {
-  background-color: var(--bs-card-bg);
-  border: 1px solid var(--bs-border-color);
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
 /* Стили для скроллбара */
